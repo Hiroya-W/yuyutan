@@ -1,29 +1,41 @@
 FROM mcr.microsoft.com/devcontainers/base:jammy
-# FROM mcr.microsoft.com/devcontainers/base:jammy 
+# FROM mcr.microsoft.com/devcontainers/base:jammy
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=vscode
 
 RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \ 
+    && apt-get update \
     && apt-get install -y build-essential --no-install-recommends make \
-        ca-certificates \
-        git \
-        libssl-dev \
-        zlib1g-dev \
-        libbz2-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        wget \
-        curl \
-        llvm \
-        libncurses5-dev \
-        xz-utils \
-        tk-dev \
-        libxml2-dev \
-        libxmlsec1-dev \
-        libffi-dev \
-        liblzma-dev
+    ca-certificates \
+    git \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    xz-utils \
+    tk-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libffi-dev \
+    liblzma-dev \
+    file \
+    mecab \
+    libmecab-dev \
+    mecab-ipadic-utf8
+
+WORKDIR /opt
+
+RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git && \
+    cd mecab-ipadic-neologd && \
+    ./bin/install-mecab-ipadic-neologd -n -y && \
+    echo `mecab-config --dicdir`"/mecab-ipadic-neologd" > /etc/mecabrc && \
+    cp /etc/mecabrc /usr/local/etc
 
 # Python and poetry installation
 USER $USER
