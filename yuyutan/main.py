@@ -1,8 +1,10 @@
 from pathlib import Path
+import time
 import markovify
 from dotenv import load_dotenv
 from mastodon import Mastodon
 import os
+import schedule
 
 load_dotenv()
 
@@ -17,7 +19,7 @@ api = Mastodon(
 DATA_DIR = Path("datas")
 
 
-def main() -> None:
+def job() -> None:
     with open(DATA_DIR / Path("model/model.json"), "r") as fp:
         model_json = fp.read()
     model = markovify.Text.from_json(model_json)
@@ -25,6 +27,14 @@ def main() -> None:
     sentence = model.make_short_sentence(140)
     sentence = "".join(sentence.split(" "))
     api.toot(sentence)
+
+
+def main() -> None:
+    schedule.every(60).minutes.do(job)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 if __name__ == "__main__":
