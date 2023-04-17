@@ -34,7 +34,7 @@ WORKDIR /opt
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git && \
     cd mecab-ipadic-neologd && \
     ./bin/install-mecab-ipadic-neologd -n -y && \
-    echo `mecab-config --dicdir`"/mecab-ipadic-neologd" > /etc/mecabrc && \
+    echo dicdir = `mecab-config --dicdir`"/mecab-ipadic-neologd" > /etc/mecabrc && \
     cp /etc/mecabrc /usr/local/etc
 
 # Python and poetry installation
