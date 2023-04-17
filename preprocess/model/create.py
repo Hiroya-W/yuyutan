@@ -18,7 +18,7 @@ def main() -> None:
 
     all_wakatigaki = []
     for tweet in tweets:
-        wakatigaki = m.parse(str(tweet))
+        wakatigaki = m.parse(str(tweet[0]))
         all_wakatigaki.append(wakatigaki)
 
     corpus = "\n".join(all_wakatigaki)
