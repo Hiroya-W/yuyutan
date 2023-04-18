@@ -1,0 +1,13 @@
+services:
+  worker:
+    image: h-watanabe/yuyutan-worker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yuyutan-worker
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspaces/yuyutan
+    working_dir: /workspaces/yuyutan
+    command: /bin/sh -c "poetry install && poetry run python yuyutan/main.py"
