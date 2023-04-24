@@ -11,3 +11,4 @@ services:
         target: /workspaces/yuyutan
     working_dir: /workspaces/yuyutan
     command: /bin/sh -c "poetry install && poetry run python yuyutan/main.py"
+    restart: always
