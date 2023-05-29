@@ -30,4 +30,4 @@ services:
       - redis
     command: >
       /bin/sh -c "poetry install &&
-      rq worker --url redis:6379 --with-scheduler
+      rq worker --url redis:6379 --with-scheduler"
