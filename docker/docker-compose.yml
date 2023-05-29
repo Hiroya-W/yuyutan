@@ -18,7 +18,7 @@ services:
     networks:
       - yuyutan-network
     command: >
-      /bin/sh -c "bash entrypoint.sh && sleep infinity"
+      /bin/sh -c "bash docker/entrypoint.sh && sleep infinity"
     restart: always
   redis:
     image: "redis:latest"
