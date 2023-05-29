@@ -11,7 +11,7 @@ services:
         target: /workspaces/yuyutan
     working_dir: /workspaces/yuyutan
     environment:
-      - REDIS_HOST: redis
+      - "REDIS_HOST=redis"
     command: >
       /bin/sh -c "poetry install &&
       poetry run python workers/periodic_toot.py"
