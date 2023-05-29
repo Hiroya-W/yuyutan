@@ -39,7 +39,7 @@ services:
       - yuyutan-network
     command: >
       /bin/sh -c "poetry install &&
-      poetry run rq worker --url redis:6379 --with-scheduler"
+      poetry run rq worker --url redis://redis:6379 --with-scheduler"
 
 networks:
   yuyutan-network:
