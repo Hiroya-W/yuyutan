@@ -25,7 +25,8 @@ services:
     volumes:
       - "./datas/redis:/data"
   worker:
-    image: h-watanabe/yuyutan-worker
+    image: h-watanabe/yuyutan-app
+    container_name: yuyutan-worker
     depends_on:
       - redis
     command: >
