@@ -1,10 +1,10 @@
 services:
-  worker:
-    image: h-watanabe/yuyutan-worker
+  app:
+    image: h-watanabe/yuyutan-app
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: yuyutan-worker
+    container_name: yuyutan-app
     volumes:
       - type: bind
         source: ..
@@ -12,6 +12,7 @@ services:
     working_dir: /workspaces/yuyutan
     environment:
       - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
     command: >
       /bin/sh -c "poetry install &&
       poetry run python workers/periodic_toot.py"
@@ -23,4 +24,10 @@ services:
       - "6379:6379"
     volumes:
       - "./datas/redis:/data"
-    command: rq worker --with-scheduler
+  worker:
+    image: h-watanabe/yuyutan-worker
+    depends_on:
+      - redis
+    command: >
+      /bin/sh -c "poetry install &&
+      rq worker --url redis:6379 --with-scheduler
