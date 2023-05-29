@@ -12,7 +12,9 @@ services:
     working_dir: /workspaces/yuyutan
     environment:
       - REDIS_HOST: redis
-    command: /bin/sh -c "poetry install && poetry run python yuyutan/main.py"
+    command: >
+      /bin/sh -c "poetry install &&
+      poetry run python workers/periodic_toot.py"
     restart: always
   redis:
     image: "redis:latest"
@@ -20,3 +22,4 @@ services:
       - "6379:6379"
     volumes:
       - "./datas/redis:/data"
+    command: rq worker --with-scheduler
