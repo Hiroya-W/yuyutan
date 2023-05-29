@@ -30,6 +30,7 @@ services:
       - "./datas/redis:/data"
     networks:
       - yuyutan-network
+    restart: always
   worker:
     image: h-watanabe/yuyutan-app
     container_name: yuyutan-worker
@@ -40,6 +41,7 @@ services:
     command: >
       /bin/sh -c "poetry install &&
       poetry run rq worker --url redis://redis:6379 --with-scheduler"
+    restart: always
 
 networks:
   yuyutan-network:
