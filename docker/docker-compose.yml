@@ -10,6 +10,8 @@ services:
         source: ..
         target: /workspaces/yuyutan
     working_dir: /workspaces/yuyutan
+    depends_on:
+      - redis
     environment:
       - "REDIS_HOST=redis"
       - "REDIS_PORT=6379"
