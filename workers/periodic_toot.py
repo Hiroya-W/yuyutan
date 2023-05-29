@@ -1,3 +1,4 @@
+import os
 from zoneinfo import ZoneInfo
 from datetime import datetime, timedelta
 import schedule
@@ -8,7 +9,11 @@ from yuyutan.jobs.periodic_toot import periodic_toot
 from redis import Redis
 from rq import Queue
 
-queue = Queue(connection=Redis())
+from dotenv import load_dotenv
+
+load_dotenv()
+
+queue = Queue(connection=Redis(host=os.environ.get("REDIS_HOST", "localhost")))
 
 
 def enqueue() -> None:

@@ -10,6 +10,8 @@ services:
         source: ..
         target: /workspaces/yuyutan
     working_dir: /workspaces/yuyutan
+    environment:
+      - REDIS_HOST: redis
     command: /bin/sh -c "poetry install && poetry run python yuyutan/main.py"
     restart: always
   redis:
