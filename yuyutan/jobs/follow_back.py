@@ -46,7 +46,7 @@ def notification_handler(notification: Notification) -> None:
                 id=account_id
             )
             api.toot(
-                f"@{username} {display_name}、フォローありがとうっちゃ！"
+                f"@{username} {display_name}さん、フォローありがとうっちゃ！"
             )
 
             logger.info(f"follow {display_name}")
