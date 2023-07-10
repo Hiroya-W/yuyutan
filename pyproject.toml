@@ -11,7 +11,7 @@ python = "^3.10"
 mecab-python3 = "^1.0.6"
 pandas = "^2.0.0"
 tqdm = "^4.65.0"
-mastodon-py = "^1.8.0"
+mastodon-py = {git = "https://github.com/halcy/Mastodon.py.git", rev = "cd86887d88bbc07de462d1e00a8fbc3d956c0151"}
 markovify = "^0.9.4"
 python-dotenv = "^1.0.0"
 schedule = "^1.2.0"
