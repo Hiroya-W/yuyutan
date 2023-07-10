@@ -27,7 +27,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
     file \
     mecab \
     libmecab-dev \
-    mecab-ipadic-utf8
+    mecab-ipadic-utf8 \
+    redis
 
 WORKDIR /opt
 

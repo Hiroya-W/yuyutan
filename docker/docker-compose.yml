@@ -10,5 +10,27 @@ services:
         source: ..
         target: /workspaces/yuyutan
     working_dir: /workspaces/yuyutan
-    command: /bin/sh -c "poetry install && poetry run python yuyutan/main.py"
+    depends_on:
+      - redis
+    environment:
+      - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
+    networks:
+      - yuyutan-network
+    command: >
+      /bin/sh -c "bash docker/entrypoint.sh && sleep infinity"
     restart: always
+  redis:
+    image: "redis:latest"
+    container_name: yuyutan-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./datas/redis:/data"
+    networks:
+      - yuyutan-network
+    restart: always
+
+networks:
+  yuyutan-network:
+    name: yuyutan-network

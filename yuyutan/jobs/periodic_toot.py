@@ -1,12 +1,10 @@
 import datetime
 import json
 from pathlib import Path
-import time
 import markovify
 from dotenv import load_dotenv
 from mastodon import Mastodon
 import os
-import schedule
 from logging import getLogger, config
 
 DATA_DIR = Path("datas")
@@ -37,7 +35,7 @@ api = Mastodon(
 )
 
 
-def job() -> None:
+def periodic_toot() -> None:
     with open(DATA_DIR / Path("model/model.json"), "r") as fp:
         model_json = fp.read()
     model = markovify.Text.from_json(model_json)
@@ -46,16 +44,3 @@ def job() -> None:
     sentence = "".join(sentence.split(" "))
     api.toot(sentence)
     logger.info(f"Toot: {sentence}")
-
-
-def main() -> None:
-    schedule.every(60).minutes.do(job)
-
-    logger.info("Start yuyutan worker")
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-
-if __name__ == "__main__":
-    main()
