@@ -1,11 +1,12 @@
 import datetime
 import json
+import os
+from logging import config, getLogger
 from pathlib import Path
+
 import markovify
 from dotenv import load_dotenv
 from mastodon import Mastodon
-import os
-from logging import getLogger, config
 
 DATA_DIR = Path("datas")
 LOG_DIR = Path("logs")
@@ -18,7 +19,7 @@ if not LOG_DIR.exists():
     LOG_DIR.mkdir()
 
 logger_config["handlers"]["fileHandler"]["filename"] = (
-    LOG_DIR / f"{datetime.datetime.now().isoformat()}.log"
+    LOG_DIR / f"{datetime.datetime.now().isoformat()}-{Path(__file__).name}.log"
 )
 
 config.dictConfig(logger_config)
