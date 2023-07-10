@@ -42,5 +42,8 @@ def periodic_toot() -> None:
 
     sentence = model.make_short_sentence(140)
     sentence = "".join(sentence.split(" "))
-    api.toot(sentence)
-    logger.info(f"Toot: {sentence}")
+    try:
+        api.toot(sentence)
+        logger.info(f"Toot: {sentence}")
+    except Exception as e:
+        logger.error(e)
