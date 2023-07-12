@@ -4,9 +4,9 @@ import os
 from logging import config, getLogger
 from pathlib import Path
 
-import markovify
 from dotenv import load_dotenv
 from mastodon import Mastodon
+from mastodon.types import Account
 
 DATA_DIR = Path("datas")
 LOG_DIR = Path("logs")
@@ -36,15 +36,19 @@ api = Mastodon(
 )
 
 
-def periodic_toot() -> None:
-    with open(DATA_DIR / Path("model/model.json"), "r") as fp:
-        model_json = fp.read()
-    model = markovify.Text.from_json(model_json)
+def follow_back(account: Account) -> None:
+    account_id = account.id
+    username = account.username
+    display_name = account.display_name
 
-    sentence = model.make_short_sentence(140)
-    sentence = "".join(sentence.split(" "))
     try:
-        api.toot(sentence)
-        logger.info(f"Toot: {sentence}")
+        api.account_follow(
+            id=account_id
+        )
+        api.toot(
+            f"@{username} {display_name}さん、フォローありがとうっちゃ！"
+        )
+
+        logger.info(f"follow {display_name}")
     except Exception as e:
         logger.error(e)
