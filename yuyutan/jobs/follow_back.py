@@ -5,8 +5,8 @@ from logging import config, getLogger
 from pathlib import Path
 
 from dotenv import load_dotenv
-from mastodon import Mastodon, streaming
-from mastodon.types import Notification
+from mastodon import Mastodon
+from mastodon.types import Account
 
 DATA_DIR = Path("datas")
 LOG_DIR = Path("logs")
@@ -36,35 +36,19 @@ api = Mastodon(
 )
 
 
-def notification_handler(notification: Notification) -> None:
-    if notification.type == "follow":
-        account_id = notification.account.id
-        username = notification.account.username
-        display_name = notification.account.display_name
-        try:
-            api.account_follow(
-                id=account_id
-            )
-            api.toot(
-                f"@{username} {display_name}さん、フォローありがとうっちゃ！"
-            )
+def follow_back(account: Account) -> None:
+    account_id = account.id
+    username = account.username
+    display_name = account.display_name
 
-            logger.info(f"follow {display_name}")
-        except Exception as e:
-            logger.error(e)
+    try:
+        api.account_follow(
+            id=account_id
+        )
+        api.toot(
+            f"@{username} {display_name}さん、フォローありがとうっちゃ！"
+        )
 
-
-listener = streaming.CallbackStreamListener(
-    notification_handler=notification_handler
-)
-
-api.stream_user(
-    listener=listener,
-    run_async=True,
-    reconnect_async=True
-)
-
-
-if __name__ == "__main__":
-    while True:
-        pass
+        logger.info(f"follow {display_name}")
+    except Exception as e:
+        logger.error(e)
