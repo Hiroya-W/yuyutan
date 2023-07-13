@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from mastodon.types import Notification
 import os
 from yuyutan.jobs.follow_back import follow_back
+from yuyutan.jobs.reply import reply
 from dotenv import load_dotenv
 
 from redis import Redis
@@ -26,6 +27,14 @@ def notification_handler(notification: Notification) -> None:
         now = datetime.now(ZoneInfo("Asia/Tokyo"))
         next_ = now + timedelta(seconds=5)
         queue.enqueue_at(next_, follow_back, notification.account)
+
+    if notification.type == "mention" and notification.status.in_reply_to_id is None:
+        account = notification.account
+        status = notification.status
+
+        now = datetime.now(ZoneInfo("Asia/Tokyo"))
+        next_ = now + timedelta(seconds=5)
+        queue.enqueue_at(next_, reply, status.id, account)
 
 
 listener = streaming.CallbackStreamListener(
