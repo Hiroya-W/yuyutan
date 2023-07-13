@@ -1,11 +1,17 @@
-import os
 from mastodon import streaming, Mastodon
-from mastodon.types import Notification, Account
-
+from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta
+from mastodon.types import Notification
+import os
 from dotenv import load_dotenv
+
+from redis import Redis
+from rq import Queue
+from yuyutan.jobs.reply import reply
 
 load_dotenv()
 
+queue = Queue(connection=Redis(host=os.environ.get("REDIS_HOST", "localhost")))
 
 api = Mastodon(
     api_base_url=os.environ.get("MASTODON_API_BASE_URL"),
@@ -15,31 +21,26 @@ api = Mastodon(
 )
 
 
-def reply(reply_to_id: str, from_account: Account) -> None:
-    api.status_post(
-        f"@{from_account.username} りぷらいっちゃ",
-        in_reply_to_id=reply_to_id
-    )
-
-
 def notification_handler(notification: Notification) -> None:
     if notification.type == "mention" and notification.status.in_reply_to_id is None:
         account = notification.account
         status = notification.status
 
-        reply(status.in_reply_to_id, account)
+        now = datetime.now(ZoneInfo("Asia/Tokyo"))
+        next_ = now + timedelta(seconds=5)
+        queue.enqueue_at(next_, reply, status.in_reply_to_id, account)
 
 
 listener = streaming.CallbackStreamListener(
     notification_handler=notification_handler
 )
 
-
 api.stream_user(
     listener=listener,
     run_async=True,
     reconnect_async=True
 )
+
 
 if __name__ == "__main__":
     while True:
