@@ -26,10 +26,14 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - "./datas/redis:/data"
+      - "yuyutan-redis-data:/data"
     networks:
       - yuyutan-network
     restart: always
+
+volumes:
+  yuyutan-redis-data:
+    name: yuyutan-redis-data
 
 networks:
   yuyutan-network:
