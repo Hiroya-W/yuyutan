@@ -1,3 +1,4 @@
+import time
 from mastodon import streaming, Mastodon
 from zoneinfo import ZoneInfo
 from datetime import datetime, timedelta
@@ -41,4 +42,4 @@ api.stream_user(
 
 if __name__ == "__main__":
     while True:
-        pass
+        time.sleep(1)
