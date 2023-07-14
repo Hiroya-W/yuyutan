@@ -5,7 +5,9 @@ description = "Add a short description here"
 authors = [
     { name = "Hiroya-W", email = "hyuyukun@gmail.com" }
 ]
-dependencies = []
+dependencies = [
+    "python-dotenv~=1.0.0",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 

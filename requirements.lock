@@ -7,3 +7,4 @@
 #   all-features: false
 
 -e file:.
+python-dotenv==1.0.0
