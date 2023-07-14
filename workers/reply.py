@@ -10,6 +10,10 @@ from redis import Redis
 from rq import Queue
 from yuyutan.jobs.reply import reply
 
+
+MAX_REPLY_LENGTH = 5
+
+
 load_dotenv()
 
 queue = Queue(connection=Redis(host=os.environ.get("REDIS_HOST", "localhost")))
@@ -23,13 +27,19 @@ api = Mastodon(
 
 
 def notification_handler(notification: Notification) -> None:
-    if notification.type == "mention" and notification.status.in_reply_to_id is None:
-        account = notification.account
+    if notification.type == "mention":
         status = notification.status
 
-        now = datetime.now(ZoneInfo("Asia/Tokyo"))
-        next_ = now + timedelta(seconds=5)
-        queue.enqueue_at(next_, reply, status.id, account)
+        context = api.status_context(
+            status.id
+        )
+
+        if len(context.ancestors) < MAX_REPLY_LENGTH:
+            account = notification.account
+
+            now = datetime.now(ZoneInfo("Asia/Tokyo"))
+            next_ = now + timedelta(seconds=5)
+            queue.enqueue_at(next_, reply, status.id, account)
 
 
 listener = streaming.CallbackStreamListener(
