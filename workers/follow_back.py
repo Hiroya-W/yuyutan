@@ -23,7 +23,6 @@ api = Mastodon(
 
 
 def notification_handler(notification: Notification) -> None:
-    print(notification)
     if notification.type == "follow":
         now = datetime.now(ZoneInfo("Asia/Tokyo"))
         next_ = now + timedelta(seconds=5)
