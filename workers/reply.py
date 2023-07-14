@@ -4,11 +4,15 @@ from zoneinfo import ZoneInfo
 from datetime import datetime, timedelta
 from mastodon.types import Notification
 import os
-from yuyutan.jobs.follow_back import follow_back
 from dotenv import load_dotenv
 
 from redis import Redis
 from rq import Queue
+from yuyutan.jobs.reply import reply
+
+
+MAX_REPLY_LENGTH = 5
+
 
 load_dotenv()
 
@@ -23,10 +27,19 @@ api = Mastodon(
 
 
 def notification_handler(notification: Notification) -> None:
-    if notification.type == "follow":
-        now = datetime.now(ZoneInfo("Asia/Tokyo"))
-        next_ = now + timedelta(seconds=5)
-        queue.enqueue_at(next_, follow_back, notification.account)
+    if notification.type == "mention":
+        status = notification.status
+
+        context = api.status_context(
+            status.id
+        )
+
+        if len(context.ancestors) < MAX_REPLY_LENGTH:
+            account = notification.account
+
+            now = datetime.now(ZoneInfo("Asia/Tokyo"))
+            next_ = now + timedelta(seconds=5)
+            queue.enqueue_at(next_, reply, status.id, account)
 
 
 listener = streaming.CallbackStreamListener(
