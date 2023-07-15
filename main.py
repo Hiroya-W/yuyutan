@@ -3,9 +3,11 @@ Bot entry point
 """
 
 import os
-from dotenv import load_dotenv
-from mastodon_bot.databases.mysql import create_session
 
+from dotenv import load_dotenv
+from mastodon_bot.core import Bot
+
+from mastodon_bot.databases.mysql import create_session
 
 load_dotenv()
 
@@ -18,4 +20,8 @@ if __name__ == "__main__":
         port=int(os.getenv("MYSQL_PORT", 3306)),
         database=os.getenv("MYSQL_DATABASE", "mastodon_bot"),
     )
-    print(os.environ)
+
+    bot = Bot(
+        env=os.environ,
+        db=session,
+    )
