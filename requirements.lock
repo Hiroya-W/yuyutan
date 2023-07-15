@@ -12,7 +12,7 @@ certifi==2023.5.7
 charset-normalizer==3.2.0
 decorator==5.1.1
 idna==3.4
-mastodon-py==1.8.1
+mastodon-py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151
 python-dateutil==2.8.2
 python-dotenv==1.0.0
 python-magic==0.4.27

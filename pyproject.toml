@@ -8,7 +8,7 @@ authors = [
 dependencies = [
     "python-dotenv~=1.0.0",
     "sqlalchemy~=2.0.18",
-    "Mastodon.py~=1.8.1",
+    "Mastodon.py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
