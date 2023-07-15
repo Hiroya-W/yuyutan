@@ -8,3 +8,5 @@
 
 -e file:.
 python-dotenv==1.0.0
+sqlalchemy==2.0.18
+typing-extensions==4.7.1
