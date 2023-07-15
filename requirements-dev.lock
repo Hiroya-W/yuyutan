@@ -8,9 +8,15 @@
 
 -e file:.
 black==23.7.0
+blurhash==1.1.4
+certifi==2023.5.7
+charset-normalizer==3.2.0
 click==8.1.5
+decorator==5.1.1
 flake8==5.0.4
+idna==3.4
 isort==5.12.0
+mastodon-py==1.8.1
 mccabe==0.7.0
 mypy==1.4.1
 mypy-extensions==1.0.0
@@ -19,6 +25,11 @@ pathspec==0.11.1
 platformdirs==3.8.1
 pycodestyle==2.9.1
 pyflakes==2.5.0
+python-dateutil==2.8.2
 python-dotenv==1.0.0
+python-magic==0.4.27
+requests==2.31.0
+six==1.16.0
 sqlalchemy==2.0.18
 typing-extensions==4.7.1
+urllib3==2.0.3

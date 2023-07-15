@@ -7,6 +7,17 @@
 #   all-features: false
 
 -e file:.
+blurhash==1.1.4
+certifi==2023.5.7
+charset-normalizer==3.2.0
+decorator==5.1.1
+idna==3.4
+mastodon-py==1.8.1
+python-dateutil==2.8.2
 python-dotenv==1.0.0
+python-magic==0.4.27
+requests==2.31.0
+six==1.16.0
 sqlalchemy==2.0.18
 typing-extensions==4.7.1
+urllib3==2.0.3
