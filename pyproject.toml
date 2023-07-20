@@ -16,6 +16,7 @@ markovify = "^0.9.4"
 python-dotenv = "^1.0.0"
 schedule = "^1.2.0"
 rq = "^1.14.1"
+spacy = {extras = ["ja"], version = "^3.6.0"}
 
 
 [tool.poetry.group.dev.dependencies]
