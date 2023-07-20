@@ -60,9 +60,9 @@ def reply(reply_to_id: str, from_account: Account, content: str) -> None:
                 print(e)
 
     if candidates == []:
-        candidates.append(
-            model.make_short_sentence(140)
-        )
+        sentence = model.make_short_sentence(140)
+        sentence = "".join(sentence.split(" "))
+        candidates.append(sentence)
 
     random.shuffle(candidates)
     sentence = candidates[0]
