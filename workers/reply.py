@@ -39,7 +39,7 @@ def notification_handler(notification: Notification) -> None:
 
             now = datetime.now(ZoneInfo("Asia/Tokyo"))
             next_ = now + timedelta(seconds=5)
-            queue.enqueue_at(next_, reply, status.id, account)
+            queue.enqueue_at(next_, reply, status.id, account, content=notification.status.content)
 
 
 listener = streaming.CallbackStreamListener(
