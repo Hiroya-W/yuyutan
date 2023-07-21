@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 
 from redis import Redis
 from rq import Queue
-from yuyutan.jobs.reply import reply
+from yuyutan.jobs.reply import reply, reply_spotify_now_playing
+from yuyutan.spotify.get_playing import get_playing
 
 
 MAX_REPLY_LENGTH = 5
@@ -28,18 +29,23 @@ api = Mastodon(
 
 def notification_handler(notification: Notification) -> None:
     if notification.type == "mention":
+        now = datetime.now(ZoneInfo("Asia/Tokyo"))
+        next_ = now + timedelta(seconds=5)
+
+        account = notification.account
         status = notification.status
+        content = notification.status.content
 
-        context = api.status_context(
-            status.id
-        )
+        if "今何聞いてる？" in content:
+            url = get_playing()
+            queue.enqueue_at(next_, reply_spotify_now_playing, status.id, account, url=url)
+        else:
+            context = api.status_context(
+                status.id
+            )
 
-        if len(context.ancestors) < MAX_REPLY_LENGTH:
-            account = notification.account
-
-            now = datetime.now(ZoneInfo("Asia/Tokyo"))
-            next_ = now + timedelta(seconds=5)
-            queue.enqueue_at(next_, reply, status.id, account, content=notification.status.content)
+            if len(context.ancestors) < MAX_REPLY_LENGTH:
+                queue.enqueue_at(next_, reply, status.id, account, content=notification.status.content)
 
 
 listener = streaming.CallbackStreamListener(

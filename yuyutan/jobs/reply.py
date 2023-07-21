@@ -39,6 +39,23 @@ api = Mastodon(
 )
 
 
+def reply_spotify_now_playing(reply_to_id: str, from_account: Account, url: str | None) -> None:
+    if url is None:
+        sentence = "ゆゆ君は何も聞いていないっぽい"
+    else:
+        sentence = f"ゆゆ君はこの曲を聞いているっぽい\n{url}"
+
+    reply_str = f"@{from_account.username} {sentence}"
+    try:
+        api.status_post(
+            reply_str,
+            in_reply_to_id=reply_to_id
+        )
+        logger.info(f"Reply: {reply_str}")
+    except Exception as e:
+        logger.error(e)
+
+
 def reply(reply_to_id: str, from_account: Account, content: str) -> None:
     with open(DATA_DIR / Path("model/model.json"), "r") as fp:
         model_json = fp.read()
