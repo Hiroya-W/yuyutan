@@ -1184,6 +1184,28 @@ files = [
 ]
 
 [[package]]
+name = "spotipy"
+version = "2.23.0"
+description = "A light weight Python library for the Spotify Web API"
+optional = false
+python-versions = "*"
+files = [
+    {file = "spotipy-2.23.0-py2-none-any.whl", hash = "sha256:da850fbf62faaa05912132d2886c293a5fbbe8350d0821e7208a6a2fdd6a0079"},
+    {file = "spotipy-2.23.0-py3-none-any.whl", hash = "sha256:6bf8b963c10d0a3e51037e4baf92e29732dee36b2a1f1b7dcc8cd5771e662a5b"},
+    {file = "spotipy-2.23.0.tar.gz", hash = "sha256:0dfafe08239daae6c16faa68f60b5775d40c4110725e1a7c545ad4c7fb66d4e8"},
+]
+
+[package.dependencies]
+redis = ">=3.5.3"
+requests = ">=2.25.0"
+six = ">=1.15.0"
+urllib3 = ">=1.26.0"
+
+[package.extras]
+doc = ["Sphinx (>=1.5.2)"]
+test = ["mock (==2.0.0)"]
+
+[[package]]
 name = "srsly"
 version = "2.4.7"
 description = "Modern high-performance serialization utilities for Python"
@@ -1458,4 +1480,4 @@ colorama = {version = ">=0.4.6", markers = "sys_platform == \"win32\" and python
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4730194f6c3a2fd16df56e816bd27cbb26a86b5164ec266f2572c4ace1b056ff"
+content-hash = "30c0c2f38b23b9a655d7422bc7d52f79af458d7f0ea64df029b8a91d70e971c5"
