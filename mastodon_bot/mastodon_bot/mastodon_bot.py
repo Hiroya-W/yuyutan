@@ -29,7 +29,7 @@ class MastodonBot:
         """
         Add a listener to the bot
         """
-        self.__listener.add_handler(listener)
+        self.__listener.add_listener(listener)
 
     def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
         """
