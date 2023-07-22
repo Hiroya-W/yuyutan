@@ -25,6 +25,7 @@ pathspec==0.11.1
 platformdirs==3.8.1
 pycodestyle==2.9.1
 pyflakes==2.5.0
+pymysql==1.1.0
 python-dateutil==2.8.2
 python-dotenv==1.0.0
 python-magic==0.4.27
