@@ -25,3 +25,5 @@ if __name__ == "__main__":
         env=os.environ,
         db=session,
     )
+
+    bot.run()
