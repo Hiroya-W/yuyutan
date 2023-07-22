@@ -8,10 +8,17 @@ handlers:
     level: DEBUG
     formatter: simple
     stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: simple
+    filename: logs/app.log
+    mode: "a"
+    encoding: utf-8
 loggers:
   __main__:
     level: DEBUG
-    handlers: [console]
+    handlers: [console, file]
   mastodon_bot:
     level: DEBUG
-    handlers: [console]
+    handlers: [console, file]
