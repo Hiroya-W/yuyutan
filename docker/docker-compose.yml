@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mastodon-bot-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mastodon_bot
+      MYSQL_PASSWORD: mastodon_bot
+      MYSQL_DATABASE: mastodon_bot
+      TZ: "Asia/Tokyo"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - type: volume
+        source: mastodon-bot-mysql-data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    restart: always
+
+volumes:
+  mastodon-bot-mysql-data:
+    name: mastodon-bot-mysql-data
