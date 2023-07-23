@@ -11,6 +11,7 @@ dependencies = [
     "Mastodon.py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151",
     "pymysql~=1.1.0",
     "pyyaml~=6.0.1",
+    "rq-scheduler~=0.13.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
