@@ -16,6 +16,7 @@ class BotInterface(ABC):
     BotInterfaceを実装しているクラスを受け取るようにしておけば
     モックなど、置き換えがしやすくなるかもしれない
     """
+
     def get_api_instance(self) -> Mastodon:
         ...
 
