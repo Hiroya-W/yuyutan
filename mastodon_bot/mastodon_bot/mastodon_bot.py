@@ -11,6 +11,11 @@ from mastodon_bot.mastodon_bot.streaming import (
 
 
 class BotInterface(ABC):
+    """
+    Mastodon APIのインスタンスをどうにかして取得したかった
+    BotInterfaceを実装しているクラスを受け取るようにしておけば
+    モックなど、置き換えがしやすくなるかもしれない
+    """
     def get_api_instance(self) -> Mastodon:
         ...
 

@@ -16,6 +16,14 @@ logger = logging.getLogger(__name__)
 
 
 class CallbackStreamListener:
+    """Mastodon Streaming APIのリスナー
+
+    Mastodon.pyで用意されているStreamListenerではなく、これを継承してリスナーを作成する。
+    継承先のクラスでは、必要なハンドラのみオーバーライドすれば良い。
+
+    Mastodon Streaming APIで発生したイベントを受け取るのは、全てのリスナーを集約するBotStreamListenerが担う。
+    """
+
     def __init__(
         self,
         update_handler: Optional[Any] = None,
@@ -90,6 +98,11 @@ class CallbackStreamListener:
 
 
 class BotStreamListener(StreamListener):  # type: ignore
+    """Mastodon Streaming APIの全てのリスナーが集約されるクラス
+
+    各リスナーのハンドラはこのクラスから呼び出されるよう、add_listener()で登録しておく
+    """
+
     def __init__(self) -> None:
         super(BotStreamListener, self).__init__()
         self.__listeners: list[CallbackStreamListener] = []

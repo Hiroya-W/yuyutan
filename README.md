@@ -1,5 +1,3 @@
-# mastodon-bot-design-pattern
+# mastodon-bot-architecture
 
-Inspire: https://github.com/lucaoflaif/telegram-bot-design-pattern
-
-同じようなMastodon Botのアーキテクチャができないか考えてみる
+Mastodon.pyを使ったMastodonボットを作るにあたり、いい感じの設計を考えている。
