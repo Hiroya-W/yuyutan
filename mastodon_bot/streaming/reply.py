@@ -1,7 +1,11 @@
+import logging
+
 from mastodon.types import Notification
 
 from mastodon_bot.mastodon_bot.mastodon_bot import BotInterface
 from mastodon_bot.mastodon_bot.streaming import CallbackStreamListener
+
+logger = logging.getLogger(__name__)
 
 
 class ReplyHandler(CallbackStreamListener):
@@ -12,7 +16,7 @@ class ReplyHandler(CallbackStreamListener):
 
     def on_notification(self, notification: Notification) -> None:
         if notification.type == "mention":
-            print(f"{notification.account.acct} mentioned you")
+            logger.info(f"@{notification.account.acct} mentioned you")
 
             # Reply
             # self.__api.status_post(

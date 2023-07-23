@@ -1,7 +1,11 @@
+import logging
+
 from mastodon.types import Notification
 
 from mastodon_bot.mastodon_bot.mastodon_bot import BotInterface
 from mastodon_bot.mastodon_bot.streaming import CallbackStreamListener
+
+logger = logging.getLogger(__name__)
 
 
 class FollowingHandler(CallbackStreamListener):
@@ -12,7 +16,7 @@ class FollowingHandler(CallbackStreamListener):
 
     def on_notification(self, notification: Notification) -> None:
         if notification.type == "follow":
-            print(f"{notification.account.acct} followed you")
+            logger.info(f"@{notification.account.acct} followed you")
 
             # Follow back
             # self.__api.account_follow(notification.account.id)
