@@ -17,8 +17,8 @@ class Bot:
         self.__mastodon_bot = MastodonBot(env=env)
         self.__mastodon_bot.add_listener_many(
             [
-                FollowingHandler(),
-                ReplyHandler(),
+                FollowingHandler(self.__mastodon_bot),
+                ReplyHandler(self.__mastodon_bot),
             ]
         )
         logger.debug("Bot initialized.")
