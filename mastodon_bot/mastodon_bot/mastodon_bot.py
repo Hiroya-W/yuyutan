@@ -1,12 +1,32 @@
 from os import _Environ
-from typing import Any
+from typing import Any, Protocol
 
 from mastodon import Mastodon
 
-from mastodon_bot.mastodon_bot.streaming import BotStreamListener, CallbackStreamListener
+from mastodon_bot.mastodon_bot.streaming import (
+    BotStreamListener,
+    CallbackStreamListener,
+)
 
 
-class MastodonBot:
+class BotInterface(Protocol):
+    def get_api_instance(self) -> Mastodon:
+        ...
+
+    def add_middleware(self, middleware: list[Any]) -> None:
+        ...
+
+    def add_listener(self, listener: CallbackStreamListener) -> None:
+        ...
+
+    def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
+        ...
+
+    def run(self) -> None:
+        ...
+
+
+class MastodonBot(BotInterface):
     def __init__(self, env: _Environ[str]) -> None:
         self.__env = env
         self.__api = Mastodon(
@@ -18,6 +38,12 @@ class MastodonBot:
         self.__listener = BotStreamListener()
 
         self.__middlewares: list[Any] = []
+
+    def get_api_instance(self) -> Mastodon:
+        """
+        Get the Mastodon API
+        """
+        return self.__api
 
     def add_middleware(self, middleware: list[Any]) -> None:
         """
@@ -42,8 +68,4 @@ class MastodonBot:
         """
         Run the bot
         """
-        self.__api.stream_user(
-            self.__listener,
-            run_async=True,
-            reconnect_async=True
-        )
+        self.__api.stream_user(self.__listener, run_async=True, reconnect_async=True)
