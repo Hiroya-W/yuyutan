@@ -9,6 +9,7 @@ from pathlib import Path
 
 import yaml
 from dotenv import load_dotenv
+from redis import Redis
 
 from mastodon_bot.core import Bot
 from mastodon_bot.databases.mysql import create_session
@@ -32,12 +33,14 @@ if __name__ == "__main__":
         port=int(os.getenv("MYSQL_PORT", 3306)),
         database=os.getenv("MYSQL_DATABASE", "mastodon_bot"),
     )
+    # Redisはfakeredis-pyを使って差し替える
+    redis = Redis(
+        host=os.getenv("REDIS_HOST", "localhost"),
+        port=os.getenv("REDIS_PORT", 6379),
+    )
 
     logger.debug("Bot initializing...")
-    bot = Bot(
-        env=os.environ,
-        db=session,
-    )
+    bot = Bot(env=os.environ, db=session, redis=redis)
 
     logger.info("Bot starting...")
     bot.run()
