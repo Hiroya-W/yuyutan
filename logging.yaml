@@ -15,7 +15,17 @@ handlers:
     filename: logs/app.log
     mode: "a"
     encoding: utf-8
+  database-query:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: simple
+    filename: logs/database-query.log
+    mode: "a"
+    encoding: utf-8
 loggers:
+  sqlalchemy.engine:
+    level: INFO
+    handlers: [console, database-query]
   __main__:
     level: DEBUG
     handlers: [console, file]
