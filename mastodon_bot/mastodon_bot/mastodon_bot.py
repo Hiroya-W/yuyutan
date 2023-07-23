@@ -20,9 +20,6 @@ class BotInterface(ABC):
     def get_api_instance(self) -> Mastodon:
         ...
 
-    def add_middleware(self, middleware: list[Any]) -> None:
-        ...
-
     def add_listener(self, listener: CallbackStreamListener) -> None:
         ...
 
@@ -44,19 +41,12 @@ class MastodonBot(BotInterface):
         )
         self.__listener = BotStreamListener()
 
-        self.__middlewares: list[Any] = []
 
     def get_api_instance(self) -> Mastodon:
         """
         Get the Mastodon API
         """
         return self.__api
-
-    def add_middleware(self, middleware: list[Any]) -> None:
-        """
-        Add a middleware to the bot
-        """
-        self.__middlewares.append(middleware)
 
     def add_listener(self, listener: CallbackStreamListener) -> None:
         """
