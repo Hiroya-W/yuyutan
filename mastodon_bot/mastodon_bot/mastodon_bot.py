@@ -1,5 +1,6 @@
+from abc import ABC
 from os import _Environ
-from typing import Any, Protocol
+from typing import Any
 
 from mastodon import Mastodon
 
@@ -9,7 +10,7 @@ from mastodon_bot.mastodon_bot.streaming import (
 )
 
 
-class BotInterface(Protocol):
+class BotInterface(ABC):
     def get_api_instance(self) -> Mastodon:
         ...
 
