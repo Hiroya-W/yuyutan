@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 class FollowingHandler(CallbackStreamListener):
     def __init__(self, bot_instance: BotInterface, scheduler: Scheduler) -> None:
         super().__init__()
+        # BotInterfaceで抽象化されているように見えて、
+        # 実際には具象クラスのMastodonを利用しているのであまり意味がない気がする
+        # Mastodonのように振る舞うクラスを返せるようになれば嬉しい？
         self.__api = bot_instance.get_api_instance()
         self.__scheduler = scheduler
 

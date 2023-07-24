@@ -12,6 +12,8 @@ from mastodon_bot.mastodon_bot.streaming import (
 
 class BotInterface(ABC):
     """
+    Note
+    ----
     Mastodon APIのインスタンスをどうにかして取得したかった
     BotInterfaceを実装しているクラスを受け取るようにしておけば
     モックなど、置き換えがしやすくなるかもしれない
