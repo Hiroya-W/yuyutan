@@ -1,39 +1,14 @@
 import threading
-from abc import ABC
 from os import _Environ
 
 from mastodon import Mastodon
 
-from mastodon_bot.mastodon_bot.function import BotFunctionInterface
+from mastodon_bot.mastodon_bot.interfaces.bot import BotInterface
+from mastodon_bot.mastodon_bot.interfaces.functions import BotFunctionInterface
 from mastodon_bot.mastodon_bot.streaming import (
     BotStreamListener,
     CallbackStreamListener,
 )
-
-
-class BotInterface(ABC):
-    """
-    Note
-    ----
-    Mastodon APIのインスタンスをどうにかして取得したかった
-    BotInterfaceを実装しているクラスを受け取るようにしておけば
-    モックなど、置き換えがしやすくなるかもしれない
-    """
-
-    def get_api_instance(self) -> Mastodon:
-        ...
-
-    def add_listener(self, listener: CallbackStreamListener) -> None:
-        ...
-
-    def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
-        ...
-
-    def add_function(self, function: BotFunctionInterface) -> None:
-        ...
-
-    def run(self) -> None:
-        ...
 
 
 class MastodonBot(BotInterface):

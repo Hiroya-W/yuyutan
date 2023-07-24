@@ -5,8 +5,8 @@ from datetime import timedelta
 from mastodon import Mastodon
 from rq_scheduler import Scheduler
 
-from ..mastodon_bot.function import BotFunctionInterface
-from ..mastodon_bot.mastodon_bot import BotInterface
+from ..mastodon_bot.interfaces.bot import BotInterface
+from ..mastodon_bot.interfaces.functions import BotFunctionInterface
 
 logger = logging.getLogger(__name__)
 
