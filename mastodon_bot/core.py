@@ -6,6 +6,7 @@ from redis import Redis
 from rq_scheduler import Scheduler
 from sqlalchemy.orm import Session
 
+from mastodon_bot.functions import PeriodicToot
 from mastodon_bot.mastodon_bot import MastodonBot
 from mastodon_bot.streaming import FollowingHandler, ReplyHandler
 
@@ -29,6 +30,10 @@ class Bot:
                 ReplyHandler(self.__mastodon_bot, self.__scheduler),
             ]
         )
+        # ここで登録された関数はそれぞれ別スレッド上で実行される
+        self.__mastodon_bot.add_function(
+            PeriodicToot(self.__mastodon_bot, self.__scheduler)
+        )
         logger.debug("Bot initialized.")
 
     def run(self) -> None:
@@ -36,7 +41,7 @@ class Bot:
         Run the bot
         """
 
-        self.__mastodon_bot.run()
         logger.info("Bot started.")
+        self.__mastodon_bot.run()
         while True:
             time.sleep(1)

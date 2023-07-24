@@ -1,9 +1,10 @@
+import threading
 from abc import ABC
 from os import _Environ
-from typing import Any
 
 from mastodon import Mastodon
 
+from mastodon_bot.mastodon_bot.function import BotFunctionInterface
 from mastodon_bot.mastodon_bot.streaming import (
     BotStreamListener,
     CallbackStreamListener,
@@ -28,6 +29,9 @@ class BotInterface(ABC):
     def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
         ...
 
+    def add_function(self, function: BotFunctionInterface) -> None:
+        ...
+
     def run(self) -> None:
         ...
 
@@ -42,7 +46,7 @@ class MastodonBot(BotInterface):
             access_token=env.get("MASTODON_ACCESS_TOKEN", "mastodon_access_token"),
         )
         self.__listener = BotStreamListener()
-
+        self.__functions: list[BotFunctionInterface] = []
 
     def get_api_instance(self) -> Mastodon:
         """
@@ -63,8 +67,22 @@ class MastodonBot(BotInterface):
         for listener in listeners:
             self.add_listener(listener)
 
+    def add_function(self, function: BotFunctionInterface) -> None:
+        """
+        Add a function to the bot
+        """
+        self.__functions.append(function)
+
     def run(self) -> None:
         """
         Run the bot
         """
         self.__api.stream_user(self.__listener, run_async=True, reconnect_async=True)
+
+        for function in self.__functions:
+            # スレッドで各機能を並列実行しておく
+            # こうすることで、各機能がブロックすることなく、他の機能が実行されるようになる
+            # loggingはスレッドセーフなので、各機能でloggingを使っても問題ない
+            threading.Thread(
+                target=function.run, daemon=True  # メインスレッドが終了したら、各スレッドも終了するように
+            ).start()
