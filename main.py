@@ -11,8 +11,8 @@ import yaml
 from dotenv import load_dotenv
 from redis import Redis
 
-from mastodon_bot.core import Bot
-from mastodon_bot.databases.mysql import create_session
+from yuyutan.core import Bot
+from yuyutan.databases.mysql import create_session
 
 load_dotenv()
 
