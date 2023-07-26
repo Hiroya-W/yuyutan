@@ -1,0 +1,42 @@
+[project]
+name = "mastodon-bot-design-pattern"
+version = "0.1.0"
+description = "Add a short description here"
+authors = [
+    { name = "Hiroya-W", email = "hyuyukun@gmail.com" }
+]
+dependencies = [
+    "python-dotenv~=1.0.0",
+    "sqlalchemy~=2.0.18",
+    "Mastodon.py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151",
+    "pymysql~=1.1.0",
+    "pyyaml~=6.0.1",
+    "rq-scheduler~=0.13.1",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "black~=23.7.0",
+    "isort~=5.12.0",
+    "mypy~=1.4.1",
+    "flake8~=5.0.4",
+]
+
+[tool.isort]
+default_section = "THIRDPARTY"
+ensure_newline_before_comments = true
+force_grid_wrap = 0
+force_single_line = false
+include_trailing_comma = true
+multi_line_output = 3
+use_parentheses = true
+
+[tool.hatch.metadata]
+allow-direct-references = true
