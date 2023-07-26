@@ -1,7 +1,7 @@
 [project]
-name = "mastodon-bot-design-pattern"
+name = "yuyutan"
 version = "0.1.0"
-description = "Add a short description here"
+description = "yuyutan is a bot for Mastodon."
 authors = [
     { name = "Hiroya-W", email = "hyuyukun@gmail.com" }
 ]
