@@ -76,12 +76,10 @@ class ReplyHandler(CallbackStreamListener):
         sentence = candidates[0]
 
         reply_str = f"@{from_account.username} {sentence}"
+        logger.info(f"Reply: {reply_str}")
 
         self.__scheduler.enqueue_in(
-            timedelta(seconds=5),
-            self._reply,
-            status.id,
-            reply_str
+            timedelta(seconds=5), self._reply, status.id, reply_str
         )
 
     @staticmethod
