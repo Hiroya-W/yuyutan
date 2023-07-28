@@ -28,11 +28,11 @@ class PeriodicToot(BotFunctionInterface):
             sentence = self.__markov_chain.make_short_sentence(140)
             logger.info(f"Periodic toot: {sentence}")
             self.__scheduler.enqueue_in(
-                timedelta(seconds=5), self.__toot, self.__api, sentence
+                timedelta(seconds=5), self._toot, self.__api, sentence
             )
             time.sleep(60)
 
     @staticmethod
-    def __toot(api: Mastodon, sentence: str) -> None:
+    def _toot(api: Mastodon, sentence: str) -> None:
         # api.toot(sentence)
         pass

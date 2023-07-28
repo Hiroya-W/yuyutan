@@ -23,11 +23,11 @@ class ReplyHandler(CallbackStreamListener):
         if notification.type == "mention":
             logger.info(f"@{notification.account.acct} mentioned you")
             self.__scheduler.enqueue_in(
-                timedelta(seconds=5), self.__reply, self.__api, notification
+                timedelta(seconds=5), self._reply, self.__api, notification
             )
 
     @staticmethod
-    def __reply(api: Mastodon, notification: Notification) -> None:
+    def _reply(api: Mastodon, notification: Notification) -> None:
         # api.status_post(
         #     f"@{notification.account.acct} Hello!", in_reply_to_id=notification.status.id
         # )

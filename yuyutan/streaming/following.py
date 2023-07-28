@@ -26,10 +26,10 @@ class FollowingHandler(CallbackStreamListener):
         if notification.type == "follow":
             logger.info(f"@{notification.account.acct} followed you")
             self.__scheduler.enqueue_in(
-                timedelta(seconds=5), self.__follow_back, self.__api, notification
+                timedelta(seconds=5), self._follow_back, self.__api, notification
             )
 
     @staticmethod
-    def __follow_back(api: Mastodon, notification: Notification) -> None:
+    def _follow_back(api: Mastodon, notification: Notification) -> None:
         # api.account_follow(notification.account.id)
         pass

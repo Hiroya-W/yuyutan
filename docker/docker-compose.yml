@@ -24,7 +24,29 @@ services:
     ports:
       - "6379:6379"
     restart: always
+    networks:
+      - mastodon-bot-network
+  rq-dashboard:
+    image: rq-dashboard
+    build:
+      context: rq-dashboard
+      dockerfile: Dockerfile
+    container_name: rq-dashboard
+    depends_on:
+      - redis
+    ports:
+      - "9181:9181"
+    environment:
+      RQ_DASHBOARD_REDIS_URL: redis://redis:6379
+    command: rq-dashboard
+    restart: always
+    networks:
+      - mastodon-bot-network
 
 volumes:
   mastodon-bot-mysql-data:
     name: mastodon-bot-mysql-data
+
+networks:
+  mastodon-bot-network:
+    name: mastodon-bot-network
