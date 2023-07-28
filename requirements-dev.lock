@@ -55,6 +55,7 @@ requests==2.31.0
 rq==1.15.1
 rq-dashboard @ git+https://github.com/Parallels/rq-dashboard@dad4aae899f9c06e118a4f621d8d6f9d034abf7a
 rq-scheduler==0.13.1
+schedule==1.2.0
 six==1.16.0
 smart-open==6.3.0
 spacy==3.6.0
