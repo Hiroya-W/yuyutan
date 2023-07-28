@@ -1,0 +1,56 @@
+services:
+  # スクリプトを変更して、手でpython main.pyを実行したいので、
+  # 開発環境では、Workerコンテナは起動しない
+  mysql:
+    image: mysql:8.0
+    container_name: mastodon-bot-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mastodon_bot
+      MYSQL_PASSWORD: mastodon_bot
+      MYSQL_DATABASE: mastodon_bot
+      TZ: "Asia/Tokyo"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - type: volume
+        source: mastodon-bot-mysql-data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    restart: always
+    networks:
+      - mastodon-bot-network
+  redis:
+    image: "redis:latest"
+    container_name: mastodon-bot-redis
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - mastodon-bot-network
+  rq-dashboard:
+    image: rq-dashboard
+    build:
+      context: rq-dashboard
+      dockerfile: Dockerfile
+    container_name: rq-dashboard
+    depends_on:
+      - redis
+    ports:
+      - "9181:9181"
+    environment:
+      RQ_DASHBOARD_REDIS_URL: redis://redis:6379
+    command: rq-dashboard
+    restart: always
+    networks:
+      - mastodon-bot-network
+
+volumes:
+  mastodon-bot-mysql-data:
+    name: mastodon-bot-mysql-data
+
+networks:
+  mastodon-bot-network:
+    name: mastodon-bot-network
