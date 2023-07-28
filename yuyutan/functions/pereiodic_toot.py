@@ -1,8 +1,10 @@
 import logging
 import time
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
+import schedule
 from mastodon import Mastodon
 from rq_scheduler import Scheduler
 
@@ -24,13 +26,34 @@ class PeriodicToot(BotFunctionInterface):
 
     def run(self) -> None:
         logger.info("Periodic toot started.")
+        # scheduleを使うのをやめて、cronみたいに書きたい
+        schedule.every(60).minutes.do(self._enqueue)
+
         while True:
-            sentence = self.__markov_chain.make_short_sentence(140)
-            logger.info(f"Periodic toot: {sentence}")
-            self.__scheduler.enqueue_in(
-                timedelta(seconds=5), self._toot, self.__api, sentence
-            )
-            time.sleep(60)
+            schedule.run_pending()
+            time.sleep(1)
+
+    def _enqueue(self) -> None:
+        sentence = self.__markov_chain.make_short_sentence(140)
+        logger.info(f"Periodic toot: {sentence}")
+
+        now = datetime.now(ZoneInfo("Asia/Tokyo"))
+        # 今の時間から次に0分になる時間
+        # ちゃんと日付もまたいでくれる
+        next_ = now + timedelta(hours=1)
+
+        # ちょうど0分に投稿
+        next_ = datetime(
+            next_.year,
+            next_.month,
+            next_.day,
+            next_.hour,
+            0,
+            tzinfo=ZoneInfo("Asia/Tokyo"),
+        )
+
+        self.__scheduler.enqueue_in(next_, self._toot, self.__api, sentence)
+        time.sleep(60)
 
     @staticmethod
     def _toot(api: Mastodon, sentence: str) -> None:
