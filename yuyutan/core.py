@@ -6,9 +6,9 @@ from redis import Redis
 from rq_scheduler import Scheduler
 from sqlalchemy.orm import Session
 
-from mastodon_bot.functions import PeriodicToot
-from mastodon_bot.mastodon_bot import MastodonBot
-from mastodon_bot.streaming import FollowingHandler, ReplyHandler
+from yuyutan.functions import PeriodicToot
+from yuyutan.mastodon_bot import MastodonBot
+from yuyutan.streaming import FollowingHandler, ReplyHandler
 
 logger = logging.getLogger(__name__)
 

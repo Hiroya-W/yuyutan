@@ -3,12 +3,9 @@ from os import _Environ
 
 from mastodon import Mastodon
 
-from mastodon_bot.mastodon_bot.interfaces.bot import BotInterface
-from mastodon_bot.mastodon_bot.interfaces.functions import BotFunctionInterface
-from mastodon_bot.mastodon_bot.streaming import (
-    BotStreamListener,
-    CallbackStreamListener,
-)
+from .interfaces.bot import BotInterface
+from .interfaces.functions import BotFunctionInterface
+from .streaming import BotStreamListener, CallbackStreamListener
 
 
 class MastodonBot(BotInterface):

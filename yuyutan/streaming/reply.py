@@ -5,8 +5,8 @@ from mastodon import Mastodon
 from mastodon.types import Notification
 from rq_scheduler import Scheduler
 
-from mastodon_bot.mastodon_bot.interfaces.bot import BotInterface
-from mastodon_bot.mastodon_bot.interfaces.streaming import (
+from ..mastodon_bot.interfaces.bot import BotInterface
+from ..mastodon_bot.interfaces.streaming import (
     CallbackStreamListener,
 )
 

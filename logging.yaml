@@ -29,6 +29,6 @@ loggers:
   __main__:
     level: DEBUG
     handlers: [console, file]
-  mastodon_bot:
+  yuyutan:
     level: DEBUG
     handlers: [console, file]
