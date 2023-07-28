@@ -7,16 +7,29 @@
 #   all-features: false
 
 -e file:.
+blis==0.7.10
 blurhash==1.1.4
+catalogue==2.0.9
 certifi==2023.5.7
 charset-normalizer==3.2.0
 click==8.1.6
+confection==0.1.0
 crontab==1.0.1
+cymem==2.0.7
 decorator==5.1.1
 freezegun==1.2.2
 idna==3.4
+jinja2==3.1.2
+langcodes==3.3.0
 markovify==0.9.4
+markupsafe==2.1.3
 mastodon-py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151
+murmurhash==1.0.9
+numpy==1.25.1
+packaging==23.1
+pathy==0.10.2
+preshed==3.0.8
+pydantic==1.10.12
 pymysql==1.1.0
 python-dateutil==2.8.2
 python-dotenv==1.0.0
@@ -27,7 +40,18 @@ requests==2.31.0
 rq==1.15.1
 rq-scheduler==0.13.1
 six==1.16.0
+smart-open==6.3.0
+spacy==3.6.0
+spacy-legacy==3.0.12
+spacy-loggers==1.0.4
 sqlalchemy==2.0.18
+srsly==2.4.7
+thinc==8.1.10
+tqdm==4.65.0
+typer==0.9.0
 typing-extensions==4.7.1
 unidecode==1.3.6
 urllib3==2.0.3
+wasabi==1.1.2
+# The following packages are considered to be unsafe in a requirements file:
+setuptools==68.0.0
