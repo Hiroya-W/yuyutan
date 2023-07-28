@@ -7,6 +7,8 @@ RUN apt-get update \
     curl \
     ca-certificates \
     git \
+    rustc \
+    cargo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
