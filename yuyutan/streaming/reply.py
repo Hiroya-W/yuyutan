@@ -57,7 +57,7 @@ class ReplyHandler(CallbackStreamListener):
         logger.info(f"Reply: {reply_str}")
 
         self.__scheduler.enqueue_in(
-            timedelta(seconds=5), self._reply, status.id, reply_str
+            timedelta(seconds=5), self._reply, self.__api, status.id, reply_str
         )
 
     def __normal_reply(self, notification: Notification) -> None:
@@ -106,7 +106,7 @@ class ReplyHandler(CallbackStreamListener):
         logger.info(f"Reply: {reply_str}")
 
         self.__scheduler.enqueue_in(
-            timedelta(seconds=5), self._reply, status.id, reply_str
+            timedelta(seconds=5), self._reply, self.__api, status.id, reply_str
         )
 
     @staticmethod
