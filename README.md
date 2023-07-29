@@ -37,6 +37,13 @@ rye run rqscheduler --host localhost --port 6379 --interval 1 --verbose
 rye run python main.py
 ```
 
+### RQ Dashboard
+
+RQに追加されているジョブとその実行結果ログはRQ Dashboardから確認することができます。
+Docker Composeでコンテナが立ち上がっているので、以下のURLからアクセスすることができます。
+
+http://localhost:9181 
+
 ## Production
 
 Docker Composeを使ってコンテナを立ち上げます。開発環境とは違い、ここでは`docker-compose.yml`を元にします。
