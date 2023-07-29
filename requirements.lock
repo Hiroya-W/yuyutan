@@ -48,6 +48,8 @@ spacy-loggers==1.0.4
 spotipy==2.23.0
 sqlalchemy==2.0.18
 srsly==2.4.7
+sudachidict-core==20230110
+sudachipy==0.6.7
 thinc==8.1.10
 tqdm==4.65.0
 typer==0.9.0
