@@ -53,7 +53,6 @@ class PeriodicToot(BotFunctionInterface):
         )
 
         self.__scheduler.enqueue_in(next_, self._toot, self.__api, sentence)
-        time.sleep(60)
 
     @staticmethod
     def _toot(api: Mastodon, sentence: str) -> None:
