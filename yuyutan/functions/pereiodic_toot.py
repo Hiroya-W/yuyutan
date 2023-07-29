@@ -50,7 +50,7 @@ class PeriodicToot(BotFunctionInterface):
             next_.hour,
             0,
             tzinfo=ZoneInfo("Asia/Tokyo"),
-        )
+        ).astimezone(ZoneInfo("UTC"))  # rq-schedulerはUTCにしないといけない
 
         self.__scheduler.enqueue_at(next_, self._toot, self.__api, sentence)
 
