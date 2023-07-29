@@ -39,11 +39,12 @@ class MastodonBot(BotInterface):
         for listener in listeners:
             self.add_listener(listener)
 
-    def add_function(self, function: BotFunctionInterface) -> None:
+    def add_functions(self, functions: list[BotFunctionInterface]) -> None:
         """
         Add a function to the bot
         """
-        self.__functions.append(function)
+        for function in functions:
+            self.__functions.append(function)
 
     def run(self) -> None:
         """
