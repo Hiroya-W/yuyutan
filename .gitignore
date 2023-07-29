@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 datas/twitter/
-datas/model/model.json
+datas/model/*.json
 .DS_Store

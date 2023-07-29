@@ -1,30 +1,6 @@
 services:
-  worker:
-    image: h-watanabe/mastodon-bot-worker
-    build:
-      context: mastodon-bot
-      dockerfile: Dockerfile
-    container_name: yuyutan-worker
-    environment:
-      MYSQL_USERNAME: mastodon_bot
-      MYSQL_PASSWORD: mastodon_bot
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: mastodon_bot
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-    volumes:
-      - type: bind
-        source: ..
-        target: /workspaces/yuyutan
-    working_dir: /workspaces/yuyutan
-    depends_on:
-      - redis
-    networks:
-      - yuyutan-network
-    command: >
-      /bin/sh -c "bash docker/entrypoint.sh && sleep infinity"
-    restart: always
+  # スクリプトを変更して、手でpython main.pyを実行したいので、
+  # 開発環境では、Workerコンテナは起動しない
   mysql:
     image: mysql:8.0
     container_name: yuyutan-mysql

@@ -2,10 +2,10 @@
 
 set -e
 
-poetry install
-poetry run rq worker --url redis://redis:6379 --with-scheduler &
-sleep 3
-poetry run python workers/periodic_toot.py &
-poetry run python workers/follow_back.py &
-poetry run python workers/reply.py &
-poetry run python workers/try_toot_spotify_playing.py &
+rye sync -f
+# Redis Queueに登録されたジョブを実行するWorker
+# Workerもファイルにログ出力するようにする(自分でexception handlerをセットしたWorkerを書く)
+rye run rq worker --url redis://redis:6379 --with-scheduler &
+# Redis Queueに登録していくScheduler
+rye run rqscheduler --host redis --port 6379 --interval 1 &
+rye run python main.py &

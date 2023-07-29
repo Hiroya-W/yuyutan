@@ -1,30 +1,39 @@
-[tool.poetry]
+[project]
 name = "yuyutan"
 version = "0.1.0"
-description = ""
-authors = ["Hiroya-W <hyuyukun@gmail.com>"]
-license = "MIT"
+description = "yuyutan is a bot for Mastodon."
+authors = [
+    { name = "Hiroya-W", email = "hyuyukun@gmail.com" }
+]
+dependencies = [
+    "python-dotenv~=1.0.0",
+    "sqlalchemy~=2.0.18",
+    "Mastodon.py @ git+https://github.com/halcy/Mastodon.py@cd86887d88bbc07de462d1e00a8fbc3d956c0151",
+    "pymysql~=1.1.0",
+    "pyyaml~=6.0.1",
+    "rq-scheduler~=0.13.1",
+    "markovify~=0.9.4",
+    "schedule~=1.2.0",
+    "spotipy~=2.23.0",
+    "spacy[ja]~=3.6.0",
+    "tzdata~=2023.3",
+]
 readme = "README.md"
+requires-python = ">= 3.8"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-mecab-python3 = "^1.0.6"
-pandas = "^2.0.0"
-tqdm = "^4.65.0"
-mastodon-py = {git = "https://github.com/halcy/Mastodon.py.git", rev = "cd86887d88bbc07de462d1e00a8fbc3d956c0151"}
-markovify = "^0.9.4"
-python-dotenv = "^1.0.0"
-schedule = "^1.2.0"
-rq = "^1.14.1"
-spacy = {extras = ["ja"], version = "^3.6.0"}
-spotipy = "^2.23.0"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-
-[tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
-isort = "^5.12.0"
-flake8 = "^6.0.0"
-mypy = "^1.2.0"
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "black~=23.7.0",
+    "isort~=5.12.0",
+    "mypy~=1.4.1",
+    "flake8~=5.0.4",
+    "rq-dashboard @ git+https://github.com/Parallels/rq-dashboard@dad4aae899f9c06e118a4f621d8d6f9d034abf7a",
+]
 
 [tool.isort]
 default_section = "THIRDPARTY"
@@ -35,6 +44,5 @@ include_trailing_comma = true
 multi_line_output = 3
 use_parentheses = true
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.hatch.metadata]
+allow-direct-references = true
