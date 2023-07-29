@@ -40,16 +40,18 @@ class TryTootSpotifyPlaying(BotFunctionInterface):
 
         next_minutes = random.randint(0, 59)
 
-        next_ = datetime(
+        next_jst = datetime(
             next_.year,
             next_.month,
             next_.day,
             next_.hour,
             next_minutes,
             tzinfo=ZoneInfo("Asia/Tokyo"),
-        ).astimezone(ZoneInfo("UTC"))
+        )
+        next_utc = next_jst.astimezone(ZoneInfo("UTC"))
 
-        self.__scheduler.enqueue_at(next_, self._toot, self.__api)
+        job = self.__scheduler.enqueue_at(next_utc, self._toot, self.__api)
+        logger.debug(f"Enqueued at {next_jst}: {job}")
 
     @staticmethod
     def _toot(api: Mastodon) -> None:

@@ -1,7 +1,8 @@
 import logging
 import random
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from mastodon import Mastodon
 from mastodon.types import Notification
@@ -56,8 +57,12 @@ class ReplyHandler(CallbackStreamListener):
         reply_str = f"@{from_account.acct} {sentence}"
         logger.info(f"Reply: {reply_str}")
 
-        self.__scheduler.enqueue_in(
-            timedelta(seconds=5), self._reply, self.__api, status.id, reply_str
+        next_ = timedelta(seconds=5)
+        job = self.__scheduler.enqueue_in(
+            next_, self._reply, self.__api, status.id, reply_str
+        )
+        logger.debug(
+            f"Enqueued at {datetime.now(tz=ZoneInfo('Asia/Tokyo')) + next_}: {job}"
         )
 
     def __normal_reply(self, notification: Notification) -> None:
@@ -105,8 +110,12 @@ class ReplyHandler(CallbackStreamListener):
         reply_str = f"@{from_account.acct} {sentence}"
         logger.info(f"Reply: {reply_str}")
 
-        self.__scheduler.enqueue_in(
-            timedelta(seconds=5), self._reply, self.__api, status.id, reply_str
+        next_ = timedelta(seconds=5)
+        job = self.__scheduler.enqueue_in(
+            next_, self._reply, self.__api, status.id, reply_str
+        )
+        logger.debug(
+            f"Enqueued at {datetime.now(tz=ZoneInfo('Asia/Tokyo')) + next_}: {job}"
         )
 
     @staticmethod

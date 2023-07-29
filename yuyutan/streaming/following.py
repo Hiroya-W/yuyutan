@@ -1,14 +1,13 @@
 import logging
-from datetime import timedelta
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from mastodon import Mastodon
 from mastodon.types import Notification
 from rq_scheduler import Scheduler
 
 from ..mastodon_bot.interfaces.bot import BotInterface
-from ..mastodon_bot.interfaces.streaming import (
-    CallbackStreamListener,
-)
+from ..mastodon_bot.interfaces.streaming import CallbackStreamListener
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +24,12 @@ class FollowingHandler(CallbackStreamListener):
     def on_notification(self, notification: Notification) -> None:
         if notification.type == "follow":
             logger.info(f"@{notification.account.acct} followed you")
-            self.__scheduler.enqueue_in(
-                timedelta(seconds=5), self._follow_back, self.__api, notification
+            next_ = timedelta(seconds=5)
+            job = self.__scheduler.enqueue_in(
+                next_, self._follow_back, self.__api, notification
+            )
+            logger.debug(
+                f"Enqueued at {datetime.now(tz=ZoneInfo('Asia/Tokyo')) + next_}: {job}"
             )
 
     @staticmethod

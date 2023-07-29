@@ -46,16 +46,18 @@ class PeriodicToot(BotFunctionInterface):
         next_ = now + timedelta(hours=1)
 
         # ちょうど0分に投稿
-        next_ = datetime(
+        next_jst = datetime(
             next_.year,
             next_.month,
             next_.day,
             next_.hour,
             0,
             tzinfo=ZoneInfo("Asia/Tokyo"),
-        ).astimezone(ZoneInfo("UTC"))  # rq-schedulerはUTCにしないといけない
+        )
+        next_utc = next_jst.astimezone(ZoneInfo("UTC"))  # rq-schedulerはUTCにしないといけない
 
-        self.__scheduler.enqueue_at(next_, self._toot, self.__api, sentence)
+        job = self.__scheduler.enqueue_at(next_utc, self._toot, self.__api, sentence)
+        logger.debug(f"Enqueued at {next_jst}: {job}")
 
     @staticmethod
     def _toot(api: Mastodon, sentence: str) -> None:
