@@ -57,5 +57,4 @@ class PeriodicToot(BotFunctionInterface):
 
     @staticmethod
     def _toot(api: Mastodon, sentence: str) -> None:
-        # api.toot(sentence)
-        pass
+        api.toot(sentence)

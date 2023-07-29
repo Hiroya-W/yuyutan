@@ -55,8 +55,9 @@ class TryTootSpotifyPlaying(BotFunctionInterface):
         url = get_playing()
 
         if url is None:
-            logger.info("Skipping toot spotify playing")
+            # 何も聞いていない場合は何もしない
+            # loggerを使いたいけど、RQ Workerからloggerを使えない...
             return
 
-        # sentence = f"ゆゆ君は今この曲を聞いてるよ\n{url}"
-        # api.toot(sentence)
+        sentence = f"ゆゆ君は今この曲を聞いてるよ\n{url}"
+        api.toot(sentence)

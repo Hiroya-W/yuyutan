@@ -111,7 +111,4 @@ class ReplyHandler(CallbackStreamListener):
 
     @staticmethod
     def _reply(api: Mastodon, reply_to_status_id: str, sentence: str) -> None:
-        # api.status_post(
-        #     f"@{notification.account.acct} Hello!", in_reply_to_id=notification.status.id
-        # )
-        pass
+        api.status_post(f"{sentence}", in_reply_to_id=reply_to_status_id)

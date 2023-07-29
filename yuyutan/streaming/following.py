@@ -31,5 +31,4 @@ class FollowingHandler(CallbackStreamListener):
 
     @staticmethod
     def _follow_back(api: Mastodon, notification: Notification) -> None:
-        # api.account_follow(notification.account.id)
-        pass
+        api.account_follow(notification.account.id)
