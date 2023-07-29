@@ -53,7 +53,7 @@ class ReplyHandler(CallbackStreamListener):
         else:
             sentence = f"ゆゆ君はこの曲を聞いているっぽい\n{url}"
 
-        reply_str = f"@{from_account.username} {sentence}"
+        reply_str = f"@{from_account.acct} {sentence}"
         logger.info(f"Reply: {reply_str}")
 
         self.__scheduler.enqueue_in(
@@ -102,7 +102,7 @@ class ReplyHandler(CallbackStreamListener):
         random.shuffle(candidates)
         sentence = candidates[0]
 
-        reply_str = f"@{from_account.username} {sentence}"
+        reply_str = f"@{from_account.acct} {sentence}"
         logger.info(f"Reply: {reply_str}")
 
         self.__scheduler.enqueue_in(
