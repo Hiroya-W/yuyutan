@@ -52,7 +52,7 @@ class PeriodicToot(BotFunctionInterface):
             tzinfo=ZoneInfo("Asia/Tokyo"),
         )
 
-        self.__scheduler.enqueue_in(next_, self._toot, self.__api, sentence)
+        self.__scheduler.enqueue_at(next_, self._toot, self.__api, sentence)
 
     @staticmethod
     def _toot(api: Mastodon, sentence: str) -> None:
