@@ -18,13 +18,10 @@ class BotInterface(ABC):
     def get_api_instance(self) -> Mastodon:
         ...
 
-    def add_listener(self, listener: CallbackStreamListener) -> None:
+    def add_listeners(self, listener: list[CallbackStreamListener]) -> None:
         ...
 
-    def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
-        ...
-
-    def add_function(self, function: BotFunctionInterface) -> None:
+    def add_functions(self, function: list[BotFunctionInterface]) -> None:
         ...
 
     def run(self) -> None:

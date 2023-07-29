@@ -26,18 +26,12 @@ class MastodonBot(BotInterface):
         """
         return self.__api
 
-    def add_listener(self, listener: CallbackStreamListener) -> None:
-        """
-        Add a listener to the bot
-        """
-        self.__listener.add_listener(listener)
-
-    def add_listener_many(self, listeners: list[CallbackStreamListener]) -> None:
+    def add_listeners(self, listeners: list[CallbackStreamListener]) -> None:
         """
         Add multiple listeners to the bot
         """
         for listener in listeners:
-            self.add_listener(listener)
+            self.__listener.add_listener(listener)
 
     def add_functions(self, functions: list[BotFunctionInterface]) -> None:
         """
