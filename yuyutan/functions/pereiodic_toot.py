@@ -27,10 +27,13 @@ class PeriodicToot(BotFunctionInterface):
     def run(self) -> None:
         logger.info("Periodic toot started.")
         # scheduleを使うのをやめて、cronみたいに書きたい
-        schedule.every(60).minutes.do(self._enqueue)
+        # run()はスレッド上で動かすので、schedulerはここで作る
+        # https://teratail.com/questions/182785
+        scheduler = schedule.Scheduler()
+        scheduler.every(60).minutes.do(self._enqueue)
 
         while True:
-            schedule.run_pending()
+            scheduler.run_pending()
             time.sleep(1)
 
     def _enqueue(self) -> None:

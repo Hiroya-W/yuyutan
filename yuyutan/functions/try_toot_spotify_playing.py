@@ -24,10 +24,11 @@ class TryTootSpotifyPlaying(BotFunctionInterface):
     def run(self) -> None:
         logger.info("TryTootSpotifyPlaying started.")
         # scheduleを使うのをやめて、cronみたいに書きたい
-        schedule.every(4).hours.do(self._enqueue)
+        scheduler = schedule.Scheduler()
+        scheduler.every(4).hours.do(self._enqueue)
 
         while True:
-            schedule.run_pending()
+            scheduler.run_pending()
             time.sleep(1)
 
     def _enqueue(self) -> None:
