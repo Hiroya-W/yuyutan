@@ -3,7 +3,7 @@ services:
   # 開発環境では、Workerコンテナは起動しない
   mysql:
     image: mysql:8.0
-    container_name: mastodon-bot-mysql
+    container_name: yuyutan-mysql
     ports:
       - "3306:3306"
     environment:
@@ -15,27 +15,27 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - type: volume
-        source: mastodon-bot-mysql-data
+        source: yuyutan-mysql-data
         target: /var/lib/mysql
         volume:
           nocopy: true
     restart: always
     networks:
-      - mastodon-bot-network
+      - yuyutan-network
   redis:
     image: "redis:latest"
-    container_name: mastodon-bot-redis
+    container_name: yuyutan-redis
     ports:
       - "6379:6379"
     restart: always
     networks:
-      - mastodon-bot-network
+      - yuyutan-network
   rq-dashboard:
-    image: rq-dashboard
+    image: h-watanabe/rq-dashboard
     build:
       context: rq-dashboard
       dockerfile: Dockerfile
-    container_name: rq-dashboard
+    container_name: yuyutan-rq-dashboard
     depends_on:
       - redis
     ports:
@@ -45,12 +45,12 @@ services:
     command: rq-dashboard
     restart: always
     networks:
-      - mastodon-bot-network
+      - yuyutan-network
 
 volumes:
-  mastodon-bot-mysql-data:
-    name: mastodon-bot-mysql-data
+  yuyutan-mysql-data:
+    name: yuyutan-mysql-data
 
 networks:
-  mastodon-bot-network:
-    name: mastodon-bot-network
+  yuyutan-network:
+    name: yuyutan-network
