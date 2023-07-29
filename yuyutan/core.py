@@ -6,7 +6,7 @@ from redis import Redis
 from rq_scheduler import Scheduler
 from sqlalchemy.orm import Session
 
-from yuyutan.functions import PeriodicToot, TryTootSpotifyPlaying
+from yuyutan.functions import AquatanGacha, PeriodicToot, TryTootSpotifyPlaying
 from yuyutan.mastodon_bot import MastodonBot
 from yuyutan.streaming import FollowingHandler, ReplyHandler
 
@@ -35,6 +35,7 @@ class Bot:
             [
                 PeriodicToot(self.__mastodon_bot, self.__scheduler),
                 TryTootSpotifyPlaying(self.__mastodon_bot, self.__scheduler),
+                AquatanGacha(self.__mastodon_bot, self.__scheduler),
             ]
         )
         logger.debug("Bot initialized.")
