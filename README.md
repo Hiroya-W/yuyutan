@@ -16,7 +16,7 @@ Docker Composeを使って、必要なミドルウェアを用意します。
 
 ```bash
 cd docker
-docker compose up -d -f docker-compose.dev.yml
+docker compose -f docker-compose.dev.yml up -d
 ```
 
 RQ Workerを実行します。
