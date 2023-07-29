@@ -24,7 +24,7 @@ class Bot:
         # できれば、引数で渡すのではなく、処理を透過的にスケジューリングできるようにしたい
         self.__scheduler = Scheduler(connection=self.__redis)
         self.__mastodon_bot = MastodonBot(env=env)
-        self.__mastodon_bot.add_listener_many(
+        self.__mastodon_bot.add_listeners(
             [
                 FollowingHandler(self.__mastodon_bot, self.__scheduler),
                 ReplyHandler(self.__mastodon_bot, self.__scheduler),
