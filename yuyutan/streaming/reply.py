@@ -1,6 +1,6 @@
-from datetime import timedelta
 import logging
 import random
+from datetime import timedelta
 from pathlib import Path
 
 from mastodon import Mastodon
@@ -11,6 +11,7 @@ from spacy.lang.ja import Japanese
 from ..markov_chain import MarkovChain
 from ..mastodon_bot.interfaces.bot import BotInterface
 from ..mastodon_bot.interfaces.streaming import CallbackStreamListener
+from ..spotify.get_playing import get_playing
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,33 @@ class ReplyHandler(CallbackStreamListener):
     def on_notification(self, notification: Notification) -> None:
         if notification.type == "mention":
             logger.info(f"@{notification.account.acct} mentioned you")
-            self.__normal_reply(notification)
+            content = notification.status.content
+
+            # ReplyHandlerに全て実装していくのではなく、
+            # それぞれの処理を別のクラスに分けて、ルールとして適用していけないかな
+            # 優先度を持ち、どれかのルールが適用されたら、それ以降のルールは適用されないようにする
+            if "今何聞いてる？" in content:
+                self.__playing_spotify(notification)
+            else:
+                self.__normal_reply(notification)
+
+    def __playing_spotify(self, notification: Notification) -> None:
+        from_account = notification.account
+        status = notification.status
+
+        url = get_playing()
+
+        if url is None:
+            sentence = "ゆゆ君は何も聞いていないっぽい"
+        else:
+            sentence = f"ゆゆ君はこの曲を聞いているっぽい\n{url}"
+
+        reply_str = f"@{from_account.username} {sentence}"
+        logger.info(f"Reply: {reply_str}")
+
+        self.__scheduler.enqueue_in(
+            timedelta(seconds=5), self._reply, status.id, reply_str
+        )
 
     def __normal_reply(self, notification: Notification) -> None:
         from_account = notification.account
