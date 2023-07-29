@@ -15,6 +15,7 @@ dependencies = [
     "markovify~=0.9.4",
     "spaCy~=3.6.0",
     "schedule~=1.2.0",
+    "spotipy~=2.23.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
