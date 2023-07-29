@@ -46,9 +46,9 @@ class TryTootSpotifyPlaying(BotFunctionInterface):
             next_.hour,
             next_minutes,
             tzinfo=ZoneInfo("Asia/Tokyo"),
-        )
+        ).astimezone(ZoneInfo("UTC"))
 
-        self.__scheduler.enqueue_in(next_, self._toot, self.__api)
+        self.__scheduler.enqueue_at(next_, self._toot, self.__api)
 
     @staticmethod
     def _toot(api: Mastodon) -> None:
