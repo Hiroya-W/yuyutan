@@ -38,6 +38,12 @@ class ReplyHandler(CallbackStreamListener):
             # ReplyHandlerに全て実装していくのではなく、
             # それぞれの処理を別のクラスに分けて、ルールとして適用していけないかな
             # 優先度を持ち、どれかのルールが適用されたら、それ以降のルールは適用されないようにする
+            if notification.account.acct == "aquatan" and "ガチャ" in content:
+                # あくあたんのガチャ結果にはリプライを飛ばさない
+                # 上のガチャリプライかどうかの判定はReplyHandlerでは書きたくない
+                # ガチャのメンションを飛ばす機能の方で、リプライの内容を決めたい
+                return
+
             if "今何聞いてる？" in content:
                 self.__playing_spotify(notification)
             else:
